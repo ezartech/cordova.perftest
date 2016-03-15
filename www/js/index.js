@@ -45,28 +45,29 @@ var app = {
         
         //hide results div
         document.getElementById('results').style.visibility = "hidden";
-        
-        var iterations = 1000;
-        var results = [];
+        setTimeout(function(){ //give the UI a chance to update the dom otherwise happens so fast can't notice change
+            var iterations = 1000;
+            var results = [];
 
-        for (i=0; i < iterations; i++) {            
-            var t1 = performance.now();
-            window.nop.doNop(
-                //function(data) { alert('nop success'); } 
-            );
-            var t2= performance.now();
-            results.push(t2-t1);
-        }
-        var firstIteration = results[0];
-        results.sort();  // note that direction doesn't matter
-        var median = results[Math.ceil(results.length / 2)];
-          
-        //generate and show results diev
-        document.getElementById('results').style.visibility = "visible";
-        document.getElementById('resultsIterations').innerHTML = iterations + "  nop iterations";
-        document.getElementById('resultsFirstIteration').innerHTML = "1st iteration: " + firstIteration.toFixed(4) + " millis";
-        document.getElementById('resultsMedian').innerHTML = "Median: " + median.toFixed(4) + " millis";
-    }
+            for (i=0; i < iterations; i++) {            
+                var t1 = performance.now();
+                window.nop.doNop(
+                    //function(data) { alert('nop success'); } 
+                );
+                var t2= performance.now();
+                results.push(t2-t1);
+            }
+            var firstIteration = results[0];
+            results.sort();  // note that direction doesn't matter
+            var median = results[Math.ceil(results.length / 2)];
+            
+            //generate and show results diev
+            document.getElementById('results').style.visibility = "visible";
+            document.getElementById('resultsIterations').innerHTML = iterations + "  nop iterations";
+            document.getElementById('resultsFirstIteration').innerHTML = "1st iteration: " + firstIteration.toFixed(4) + " millis";
+            document.getElementById('resultsMedian').innerHTML = "Median: " + median.toFixed(4) + " millis";
+        },500);
+   }
 
 };
 
